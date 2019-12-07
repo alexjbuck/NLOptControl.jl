@@ -11,6 +11,6 @@ const big_tol = 0.5 # can reduce if the number of points are increased
 #const integrationConfigs = [:lgrExplicit]
 
 @testset "NLOptControl Unit Tests (OCP and MPC)" begin
-    include("ocp.jl")
-    include("mpc.jl")
+include("ocp.jl")
+include("mpc.jl")
 end
