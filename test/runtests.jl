@@ -1,5 +1,5 @@
 using NLOptControl
-using Base.Test
+using Test
 
 # NOTE: for some reason if a test fails, then later tests are effected.
 # This behaviour can be very perplexing.
