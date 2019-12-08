@@ -435,7 +435,7 @@ function linearSpline(t::Vector,V::Vector)
     error("!isequal(length(t),length(V))")
   end
   # remove any repeating values
-  M = Array{Bool}(length(t)); M[1:length(t)] = false;
+  M = zeros(Bool,length(t));
   for i in 1:length(t)-1
       if t[i]==t[i+1]
           M[i]=true
@@ -450,8 +450,8 @@ function linearSpline(t::Vector,V::Vector)
   end
 
   # initialize vetors
-  t_new = Array{Float64}(undef, length(t)-length(rm_idx))
-  V_new = Array{Float64}(undef, length(t)-length(rm_idx))
+  t_new = Vector{Float64}(undef, length(t)-length(rm_idx))
+  V_new = Vector{Float64}(undef, length(t)-length(rm_idx))
   q = 1
   for i in 1:length(V) #TODO put an error message here if V and t are different sizes
       if !M[i]

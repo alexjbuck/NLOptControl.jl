@@ -895,7 +895,7 @@ function postProcess!(n;kwargs...)
         n.f.mpc.simFailed = [true, n.r.ocp.status]
         return nothing
       else
-        timeIdx = findall(n.r.ocp.dfs[optIdx][:t] - n.mpc.v.t .<= 0)[end]     # find the nearest index in time
+        timeIdx = findall(n.r.ocp.dfs[optIdx][:t] .- n.mpc.v.t .<= 0)[end]     # find the nearest index in time
       end
       # TODO make an error message or fix      ERROR: LoadError: BoundsError: attempt to access 0-element Array{Int64,1} at index [0]
       n.r.ocp.tst = n.r.ocp.dfs[optIdx][:t][timeIdx:end]
