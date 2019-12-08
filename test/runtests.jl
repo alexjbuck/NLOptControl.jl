@@ -1,6 +1,7 @@
 using NLOptControl
 using Statistics
 using Test
+using Printf
 
 # NOTE: for some reason if a test fails, then later tests are effected.
 # This behaviour can be very perplexing.
@@ -12,6 +13,6 @@ const big_tol = 0.5 # can reduce if the number of points are increased
 #const integrationConfigs = [:lgrExplicit]
 
 @testset "NLOptControl Unit Tests (OCP and MPC)" begin
-include("ocp.jl")
+# include("ocp.jl")
 include("mpc.jl")
 end

@@ -338,8 +338,8 @@ function simIPlant!(n)
    error("isqual(n.mpc.ip.state.pts,0), cannot simulate with zero points.")
   end
   X0 = currentIPState(n)[1]
-  t0 = round(n.mpc.v.t, digits=3) # if rounding is too rough, then the tex will be essentially 0!
-  tf = round(n.mpc.v.t + n.mpc.v.tex, digits=3)
+  t0 = round(n.mpc.v.t, digits = 3) # if rounding is too rough, then the tex will be essentially 0!
+  tf = round(n.mpc.v.t + n.mpc.v.tex,digits = 3)
 
   if isequal(n.s.mpc.mode,:OCP)
    if isequal(n.mpc.v.evalNum,1)
@@ -402,7 +402,7 @@ function predictX0!(n)
 
   if n.s.mpc.fixedTp
    # NOTE consider passing back (n.mpc.v.t + n.mpc.v.tex) from simIPlant!()
-   tp = round(n.mpc.v.t + n.mpc.v.tex, digits=1)  # TODO add 1 as an MPCparamss
+   tp = round(n.mpc.v.t + n.mpc.v.tex, digits = 1)  # TODO add 1 as an MPCparamss
   else
    error("TODO")
   end

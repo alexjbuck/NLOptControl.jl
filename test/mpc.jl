@@ -24,7 +24,15 @@ maxSim=100
 lastOptimal=false
 tolOn=true
 ```
-function MoonLander(integrationConfig;interpolationOn::Bool=true,linearInterpolation::Bool=false,numInterpPts::Int64=250,AlltpolyPts::Bool=false,predictX0::Bool=false,maxSim::Int64=100,lastOptimal::Bool=true,tolOn::Bool=false)
+function MoonLander(integrationConfig;
+                    interpolationOn::Bool=true,
+                    linearInterpolation::Bool=false,
+                    numInterpPts::Int64=250,
+                    AlltpolyPts::Bool=false,
+                    predictX0::Bool=false,
+                    maxSim::Int64=200,
+                    lastOptimal::Bool=true,
+                    tolOn::Bool=false)
   n=define(numStates=2,numControls=1,X0=[10.,-2],XF=[0.,0.],CL=[0.],CU=[3.])
   n.s.ocp.numInterpPts = numInterpPts
   n.s.ocp.linearInterpolation = linearInterpolation
@@ -56,10 +64,14 @@ end
 
 @testset "MoonLander MPC Tests" begin
   # Test #1
-  @test MoonLander(:lgrExplicit)
+  @testset "MoonLander(:lgrExplicit)" begin
+    @printf "*********************************************"
+    @test MoonLander(:lgrExplicit) end
 
   # Test #2
-  @test MoonLander(:lgrExplicit;lastOptimal=false,tolOn=true)
+  @testset "MoonLander(:lgrExplicit;lastOptimal=false,tolOn=true)" begin
+    @printf "*********************************************"
+    @test MoonLander(:lgrExplicit;lastOptimal=false,tolOn=true) end
 
   # Test #3
   # a) :ps methods with several infeasibe solutions, but gets to the goal.
@@ -69,21 +81,33 @@ end
         # WARNING: Not solved to optimality, status: Infeasible
         # ERROR: LoadError: BoundsError: attempt to access 39-element Array{Float64,1} at index [31:41]
       # To mitigate this error, if it was infeasibe and lastOptimal==true then a linearInterpolation is used.
-  @test MoonLander(:lgrExplicit;AlltpolyPts=true,numInterpPts=25,predictX0=true,maxSim=67)
+  @testset "MoonLander(:lgrExplicit;AlltpolyPts=true,numInterpPts=25,predictX0=true,maxSim=67)" begin
+    @printf "*********************************************"
+    @test MoonLander(:lgrExplicit;AlltpolyPts=true,numInterpPts=25,predictX0=true,maxSim=67) end
 
   # Test #4
-  @test MoonLander(:lgrExplicit;linearInterpolation=true,predictX0=true,maxSim=72)
+  @testset "MoonLander(:lgrExplicit;linearInterpolation=true,predictX0=true,maxSim=72)" begin
+    @printf "*********************************************"
+    @test MoonLander(:lgrExplicit;linearInterpolation=true,predictX0=true,maxSim=72) end
 
   # Test #5
-  @test MoonLander(:lgrExplicit;interpolationOn=false,predictX0=true)
+  @testset "MoonLander(:lgrExplicit;interpolationOn=false,predictX0=true)" begin
+    @printf "*********************************************"
+    @test MoonLander(:lgrExplicit;interpolationOn=false,predictX0=true) end
 
   # Test #6
-  @test MoonLander(:bkwEuler;interpolationOn=false,predictX0=true)
+  @testset "MoonLander(:bkwEuler;interpolationOn=false,predictX0=true)" begin
+    @printf "*********************************************"
+    @test MoonLander(:bkwEuler;interpolationOn=false,predictX0=true) end
 
   # Test #7
-  @test MoonLander(:trapezoidal;interpolationOn=false,predictX0=true)
+  @testset "MoonLander(:trapezoidal;interpolationOn=false,predictX0=true)" begin
+    @printf "*********************************************"
+    @test MoonLander(:trapezoidal;interpolationOn=false,predictX0=true) end
 
   # Test #8
   # :tm methods with an infeasibe solution and a restoration error
-  @test MoonLander(:bkwEuler;predictX0=false)
+  @testset "MoonLander(:bkwEuler;predictX0=false)" begin
+    @printf "*********************************************"
+    @test MoonLander(:bkwEuler;predictX0=false) end
 end
