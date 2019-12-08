@@ -443,7 +443,7 @@ function linearSpline(t::Vector,V::Vector)
           M[i]=false
       end
   end
-  rm_idx = find(M)
+  rm_idx = findall(M)
   if (length(t)==length(rm_idx))
     error("No time has elapsed and there will be an issue with interpolation. \n
           Cannot simulate the vehicle.")

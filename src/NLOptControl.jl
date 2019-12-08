@@ -162,7 +162,7 @@ function Flags()
 end
 
 abstract type AbstractNLOpt end
-struct NLOpt <: AbstractNLOpt
+mutable struct NLOpt <: AbstractNLOpt
   # major data structs
   ocp::OCP
   mpc::MPC

@@ -282,13 +282,13 @@ function mapNames!(n)
   idxOCP = 1
   for var in s1
     # go through all states in IP
-    idxIP = find(var.==s2)
+    idxIP = findall(var.==s2)
     if !isempty(idxIP)
       push!(m, [var; :stOCP; idxOCP; :stIP; idxIP[1]])
     end
 
     # go through all controls in IP
-    idxIP = find(var.==c2)
+    idxIP = findall(var.==c2)
     if !isempty(idxIP)
       push!(m, [var; :stOCP; idxOCP; :ctrIP; idxIP[1]])
     end
@@ -299,13 +299,13 @@ function mapNames!(n)
   idxOCP = 1
   for var in c1
     # go through all states in IP
-    idxIP = find(var.==s2)
+    idxIP = findall(var.==s2)
     if !isempty(idxIP)
       push!(m, [var; :ctrOCP; idxOCP; :stIP; idxIP[1]])
     end
 
     # go through all controls in IP
-    idxIP = find(var.==c2)
+    idxIP = findall(var.==c2)
     if !isempty(idxIP)
       push!(m, [var; :ctrOCP; idxOCP; :ctrIP; idxIP[1]])
     end
@@ -378,7 +378,7 @@ function currentIPState(n)
 
   # even though may have solution for plant ahead of time
   # can only get the state up to n.mpc.v.t
-  idx = find((n.mpc.v.t - n.r.ip.plant[:t]) .>= 0)
+  idx = findall((n.mpc.v.t .- n.r.ip.plant[:t]) .>= 0)
   if isempty(idx)
     error("(n.mpc.v.t - n.r.ip.plant[:t]) .>= 0) is empty.")
   else

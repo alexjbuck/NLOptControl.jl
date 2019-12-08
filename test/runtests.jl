@@ -1,4 +1,5 @@
 using NLOptControl
+using Statistics
 using Test
 
 # NOTE: for some reason if a test fails, then later tests are effected.
