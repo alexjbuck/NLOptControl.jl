@@ -744,9 +744,9 @@ function dvs2dfs(n)
   end
   for ctr in 1:n.ocp.control.num
     if n.s.ocp.integrationMethod==:tm
-      dfs[n.ocp.control.name[ctr]] = n.r.ocp.U[:,ctr]
+      dfs[!,n.ocp.control.name[ctr]] = n.r.ocp.U[:,ctr]
     else
-      dfs[n.ocp.control.name[ctr]] = [n.r.ocp.U[:,ctr];NaN]
+      dfs[!,n.ocp.control.name[ctr]] = [n.r.ocp.U[:,ctr];NaN]
     end
   end
 
@@ -902,19 +902,19 @@ function postProcess!(n;kwargs...)
       n.r.ocp.X = zeros(Float64,length(n.r.ocp.dfs[optIdx][n.ocp.state.name[1]][timeIdx:end]),n.ocp.state.num)
       if n.s.ocp.integrationMethod==:tm  # TODO try to
         n.r.ocp.tctr = n.r.ocp.dfs[optIdx][:t][timeIdx:end]
-        n.r.ocp.U = zeros(Float64,length(n.r.ocp.dfs[optIdx][n.ocp.control.name[1]][timeIdx:end]),n.ocp.control.num)
+        n.r.ocp.U = zeros(Float64,length(n.r.ocp.dfs[optIdx][:,n.ocp.control.name[1]][timeIdx:end]),n.ocp.control.num)
       else
         n.r.ocp.tctr = n.r.ocp.dfs[optIdx][:t][timeIdx:end-1]
-        n.r.ocp.U = zeros(Float64,length(n.r.ocp.dfs[optIdx][n.ocp.control.name[1]][timeIdx:end-1]),n.ocp.control.num)
+        n.r.ocp.U = zeros(Float64,length(n.r.ocp.dfs[optIdx][:,n.ocp.control.name[1]][timeIdx:end-1]),n.ocp.control.num)
       end
       for st in 1:n.ocp.state.num
         n.r.ocp.X[:,st] = n.r.ocp.dfs[optIdx][n.ocp.state.name[st]][timeIdx:end]
       end
       for ctr in 1:n.ocp.control.num
         if n.s.ocp.integrationMethod==:tm
-          n.r.ocp.U[:,ctr] = n.r.ocp.dfs[optIdx][n.ocp.control.name[ctr]][timeIdx:end]
+          n.r.ocp.U[:,ctr] = n.r.ocp.dfs[optIdx][:,n.ocp.control.name[ctr]][timeIdx:end]
         else
-          n.r.ocp.U[:,ctr] = n.r.ocp.dfs[optIdx][n.ocp.control.name[ctr]][timeIdx:end-1]
+          n.r.ocp.U[:,ctr] = n.r.ocp.dfs[optIdx][:,n.ocp.control.name[ctr]][timeIdx:end-1]
         end
       end
     else
